@@ -1,0 +1,173 @@
+/* ZTL Check — shared design system
+   Road at night (tool) vs road sign (content). Two surfaces, one vocabulary. */
+
+:root{
+  --asphalt:#15171B;
+  --asphalt-2:#1F2229;
+  --sign:#FFFFFF;
+  --paper:#F3F2EF;
+  --rosso:#CE2B37;
+  --verde:#0B7A4B;
+  --ambra:#E2A32B;
+  --chalk:rgba(255,255,255,.55);
+  --line-dark:rgba(255,255,255,.14);
+  --line-light:rgba(21,23,27,.14);
+  --muted:#5A5F68;
+  --r:14px;
+  --wrap:720px;
+}
+
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  font-family:'Archivo',system-ui,-apple-system,sans-serif;
+  -webkit-font-smoothing:antialiased;
+  line-height:1.5;
+}
+
+/* ---------- surfaces ---------- */
+body.night{background:var(--asphalt);color:var(--sign)}
+body.day{background:var(--paper);color:var(--asphalt)}
+
+.wrap{width:100%;max-width:var(--wrap);margin:0 auto;padding:0 20px}
+.narrow{max-width:560px}
+
+/* ---------- signage label ---------- */
+.plate{
+  font-family:'Archivo Narrow',sans-serif;font-weight:700;
+  text-transform:uppercase;letter-spacing:.16em;font-size:11px;
+}
+.night .plate{color:var(--chalk)}
+.day .plate{color:var(--muted)}
+
+/* ---------- header ---------- */
+.site-head{padding:20px 0;border-bottom:1px solid var(--line-light)}
+.night .site-head{border-color:var(--line-dark)}
+.site-head .wrap{display:flex;align-items:center;gap:11px}
+.mark{width:22px;height:22px;border-radius:50%;border:4px solid var(--rosso);background:var(--sign);flex:0 0 auto}
+.site-head a.brand{text-decoration:none;color:inherit;font-weight:900;letter-spacing:-.02em;font-size:15px}
+.site-head nav{margin-left:auto;display:flex;gap:16px}
+.site-head nav a{font-size:13px;text-decoration:none;color:inherit;opacity:.65}
+.site-head nav a:hover{opacity:1}
+@media(max-width:560px){.site-head nav{display:none}}
+
+/* ---------- type ---------- */
+h1{font-size:clamp(30px,6.5vw,44px);line-height:1.08;font-weight:900;letter-spacing:-.03em}
+h2{font-size:clamp(21px,4vw,27px);line-height:1.18;font-weight:900;letter-spacing:-.022em;margin:38px 0 12px}
+h3{font-size:17px;font-weight:600;margin:26px 0 7px;letter-spacing:-.01em}
+p{margin:0 0 15px;font-size:16px;line-height:1.62}
+.day p{color:#2A2E35}
+.lede{font-size:18px;line-height:1.55}
+.day .lede{color:#3A3F47}
+a{color:inherit}
+ul,ol{margin:0 0 16px 20px}
+li{margin-bottom:8px;font-size:16px;line-height:1.55}
+.day li{color:#2A2E35}
+strong{font-weight:600}
+:focus-visible{outline:2px solid var(--ambra);outline-offset:2px}
+
+/* ---------- callouts ---------- */
+.note{
+  border-left:4px solid var(--ambra);padding:14px 0 14px 16px;margin:22px 0;
+  font-size:15.5px;line-height:1.55;
+}
+.note.stop{border-color:var(--rosso)}
+.note.go{border-color:var(--verde)}
+.note b{display:block;font-weight:700;margin-bottom:4px}
+
+/* ---------- facts table ---------- */
+.facts{width:100%;border-collapse:collapse;margin:20px 0 26px;font-size:15px}
+.facts th,.facts td{text-align:left;padding:12px 0;border-bottom:1px solid var(--line-light)}
+.night .facts th,.night .facts td{border-color:var(--line-dark)}
+.facts th{
+  font-family:'Archivo Narrow',sans-serif;font-weight:700;text-transform:uppercase;
+  letter-spacing:.1em;font-size:11px;color:var(--muted);width:42%;vertical-align:top;padding-right:16px;
+}
+.night .facts th{color:var(--chalk)}
+
+/* ---------- buttons ---------- */
+.btn{
+  display:inline-block;text-decoration:none;text-align:center;border:0;cursor:pointer;
+  font:inherit;font-weight:900;font-size:15.5px;letter-spacing:-.01em;
+  padding:16px 22px;border-radius:var(--r);
+}
+.btn.primary{background:var(--ambra);color:var(--asphalt)}
+.btn.block{display:block;width:100%}
+.btn.ghost{background:transparent;border:1px solid var(--line-light);font-weight:600}
+.night .btn.ghost{border-color:var(--line-dark)}
+
+/* ---------- the tool ---------- */
+#tool{max-width:440px;margin:0 auto;padding-bottom:10px}
+.dots{display:flex;gap:6px;margin:0 0 18px}
+.dot{height:3px;flex:1;background:var(--line-dark);border-radius:2px;transition:background .25s}
+.dot.on{background:var(--sign)}
+.step{display:none;animation:in .28s ease}
+.step.on{display:block}
+@keyframes in{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+@media (prefers-reduced-motion:reduce){.step{animation:none}}
+.q{font-size:25px;line-height:1.15;font-weight:900;letter-spacing:-.025em;margin:6px 0 6px}
+.help{font-size:13.5px;color:var(--chalk);margin-bottom:18px;line-height:1.45}
+.opt{
+  width:100%;text-align:left;background:var(--asphalt-2);color:var(--sign);
+  border:1px solid var(--line-dark);border-radius:var(--r);
+  padding:16px 18px;margin-bottom:9px;cursor:pointer;font:inherit;
+  transition:border-color .15s,background .15s;
+}
+.opt:hover,.opt:focus-visible{border-color:var(--sign);background:#262a32}
+.opt b{display:block;font-weight:600;font-size:15px;line-height:1.3}
+.opt span{display:block;font-size:12.5px;color:var(--chalk);margin-top:3px}
+label.field{display:block;margin-bottom:14px}
+label.field .plate{display:block;margin-bottom:6px}
+input[type=date]{
+  width:100%;background:var(--asphalt-2);border:1px solid var(--line-dark);
+  border-radius:var(--r);padding:15px 16px;color:var(--sign);font:inherit;font-size:15px;
+}
+.next{
+  width:100%;background:var(--sign);color:var(--asphalt);border:0;border-radius:var(--r);
+  padding:16px;font:inherit;font-weight:900;font-size:15px;margin-top:4px;cursor:pointer;
+}
+.next:disabled{opacity:.35;cursor:not-allowed}
+.back{background:none;border:0;padding:14px 0;font:inherit;font-size:12.5px;color:var(--chalk);cursor:pointer}
+.back:hover{color:var(--sign)}
+
+/* signature: verdict as a road sign, the number is the days that matter */
+.sign-badge{
+  width:150px;height:150px;border-radius:50%;background:var(--sign);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  margin:4px auto 22px;
+}
+.sign-badge.green{border:13px solid var(--verde)}
+.sign-badge.amber{border:13px solid var(--ambra)}
+.sign-badge.red{border:13px solid var(--rosso)}
+.sign-badge .num{font-weight:900;font-size:52px;line-height:.9;color:var(--asphalt);letter-spacing:-.045em}
+.sign-badge .unit{
+  font-family:'Archivo Narrow',sans-serif;font-weight:700;font-size:10px;
+  text-transform:uppercase;letter-spacing:.14em;color:var(--muted);margin-top:5px;text-align:center;line-height:1.3;
+}
+#verdict{font-size:27px;line-height:1.12;font-weight:900;letter-spacing:-.028em;text-align:center}
+#detail{font-size:14.5px;line-height:1.55;color:#D3D6DB;margin:12px 0 20px;text-align:center}
+.ground{
+  border-top:1px solid var(--line-dark);border-bottom:1px solid var(--line-dark);
+  padding:13px 0;margin-bottom:20px;font-size:13.5px;color:var(--chalk);line-height:1.5;
+}
+.ground b{color:var(--sign);font-weight:600}
+
+/* ---------- city grid ---------- */
+.cities{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:9px;margin:20px 0 10px}
+.cities a{
+  display:block;text-decoration:none;padding:14px 16px;border-radius:var(--r);
+  border:1px solid var(--line-light);font-weight:600;font-size:15px;
+}
+.night .cities a{border-color:var(--line-dark)}
+.cities a:hover{border-color:var(--ambra)}
+.cities a span{display:block;font-weight:400;font-size:12.5px;color:var(--muted);margin-top:2px}
+
+/* ---------- footer ---------- */
+.site-foot{
+  margin-top:56px;padding:26px 0 34px;border-top:1px solid var(--line-light);
+  font-size:12px;line-height:1.6;color:var(--muted);
+}
+.night .site-foot{border-color:var(--line-dark);color:rgba(255,255,255,.34)}
+.site-foot a{opacity:.8}
+.site-foot nav{margin-bottom:10px;display:flex;flex-wrap:wrap;gap:14px}
+.site-foot nav a{text-decoration:none;font-weight:600}
