@@ -6,7 +6,7 @@ Otvori `index.html` duplim klikom i radi.
 ## Fajlovi
 
 ```
-index.html            početna + alat (4 pitanja)
+index.html          početna + alat (4 pitanja)
 what-is-ztl.html      šta je ZTL, kako kazna stigne
 rental-charge.html    "ovo nije kazna" — naplata rentala
 appeal-grounds.html   kada se žalba isplati, kada ne
