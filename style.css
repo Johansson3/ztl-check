@@ -18,12 +18,19 @@
 }
 
 *{box-sizing:border-box;margin:0;padding:0}
-html{scroll-behavior:smooth}
+html{
+  scroll-behavior:smooth;
+  -webkit-text-size-adjust:100%;   /* iOS must not inflate text in landscape */
+  text-size-adjust:100%;
+}
 body{
   font-family:'Archivo',system-ui,-apple-system,sans-serif;
   -webkit-font-smoothing:antialiased;
   line-height:1.5;
+  overflow-x:hidden;               /* nothing may push the page sideways */
+  -webkit-tap-highlight-color:transparent;
 }
+img,svg,video{max-width:100%;height:auto}
 
 /* ---------- surfaces ---------- */
 body.night{background:var(--asphalt);color:var(--sign)}
@@ -43,13 +50,27 @@ body.day{background:var(--paper);color:var(--asphalt)}
 /* ---------- header ---------- */
 .site-head{padding:20px 0;border-bottom:1px solid var(--line-light)}
 .night .site-head{border-color:var(--line-dark)}
-.site-head .wrap{display:flex;align-items:center;gap:11px}
+.site-head .wrap{display:flex;align-items:center;gap:11px;flex-wrap:wrap}
 .mark{width:22px;height:22px;border-radius:50%;border:4px solid var(--rosso);background:var(--sign);flex:0 0 auto}
 .site-head a.brand{text-decoration:none;color:inherit;font-weight:900;letter-spacing:-.02em;font-size:15px}
 .site-head nav{margin-left:auto;display:flex;gap:16px}
 .site-head nav a{font-size:13px;text-decoration:none;color:inherit;opacity:.65}
 .site-head nav a:hover{opacity:1}
-@media(max-width:560px){.site-head nav{display:none}}
+
+/* On a phone the nav wraps onto its own line instead of disappearing.
+   No hamburger, no JavaScript — three links fit. */
+@media(max-width:560px){
+  .site-head{padding:16px 0}
+  .site-head nav{
+    margin-left:0;flex-basis:100%;gap:0;
+    display:grid;grid-template-columns:repeat(3,1fr);
+    border-top:1px solid var(--line-light);margin-top:12px;
+  }
+  .night .site-head nav{border-color:var(--line-dark)}
+  .site-head nav a{
+    padding:11px 0;font-size:12.5px;font-weight:600;opacity:.75;text-align:center;
+  }
+}
 
 /* ---------- type ---------- */
 h1{font-size:clamp(30px,6.5vw,44px);line-height:1.08;font-weight:900;letter-spacing:-.03em}
@@ -151,6 +172,23 @@ input[type=date]{
   padding:13px 0;margin-bottom:20px;font-size:13.5px;color:var(--chalk);line-height:1.5;
 }
 .ground b{color:var(--sign);font-weight:600}
+
+/* Very small phones (iPhone SE and down): shrink the badge, tighten gutters. */
+@media(max-width:360px){
+  .wrap{padding:0 16px}
+  .sign-badge{width:128px;height:128px;border-width:11px}
+  .sign-badge .num{font-size:44px}
+  .q{font-size:22px}
+  #verdict{font-size:24px}
+  .opt{padding:14px 16px}
+}
+
+/* Landscape on a phone: the viewport is short, so stop the badge eating it. */
+@media(max-height:520px) and (orientation:landscape){
+  .sign-badge{width:104px;height:104px;border-width:9px;margin-bottom:16px}
+  .sign-badge .num{font-size:36px}
+  .sign-badge .unit{font-size:9px}
+}
 
 /* ---------- city grid ---------- */
 .cities{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:9px;margin:20px 0 10px}
