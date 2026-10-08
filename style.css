@@ -97,7 +97,7 @@ strong{font-weight:600}
 .night .btn.ghost{border-color:var(--line-dark)}
 
 /* ---------- the tool ---------- */
-#tool{max-width:440px;margin:0 auto;padding-bottom:10px}
+#tool{max-width:440px;margin:0;padding-bottom:10px}
 .dots{display:flex;gap:6px;margin:0 0 18px}
 .dot{height:3px;flex:1;background:var(--line-dark);border-radius:2px;transition:background .25s}
 .dot.on{background:var(--sign)}
