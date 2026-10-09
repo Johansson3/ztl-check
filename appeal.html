@@ -434,7 +434,12 @@ document.getElementById('gen').addEventListener('click', function(){
 
   var prov    = C.p[chosenComune[1]];
   var comune  = chosenComune[0];
-  var country = chosenCountry ? chosenCountry[1] : v('f_country');
+  // Italian name of the country, whether it was picked from the list or just typed
+  var typed = v('f_country');
+  var match = chosenCountry || window.COUNTRIES.find(function(r){
+    return fold(r[0]) === fold(typed) || fold(r[1]) === fold(typed);
+  });
+  var country = match ? match[1] : typed;
   var addr    = v('f_street') + '\n' + v('f_zip') + ' ' + v('f_town') + '\n' + country;
 
   var t =
