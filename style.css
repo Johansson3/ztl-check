@@ -109,13 +109,16 @@ strong{font-weight:600}
 /* ---------- buttons ---------- */
 .btn{
   display:inline-block;text-decoration:none;text-align:center;border:0;cursor:pointer;
-  font:inherit;font-weight:900;font-size:15.5px;letter-spacing:-.01em;
+  font:inherit;color:inherit;              /* <button> does not inherit colour on its own */
+  font-weight:900;font-size:15.5px;letter-spacing:-.01em;
   padding:16px 22px;border-radius:var(--r);
 }
 .btn.primary{background:var(--ambra);color:var(--asphalt)}
 .btn.block{display:block;width:100%}
 .btn.ghost{background:transparent;border:1px solid var(--line-light);font-weight:600}
-.night .btn.ghost{border-color:var(--line-dark)}
+.night .btn.ghost{border-color:var(--line-dark);color:var(--sign)}
+.day .btn.ghost{color:var(--asphalt)}
+.btn.ghost:hover{border-color:var(--ambra)}
 
 /* ---------- the tool ---------- */
 #tool{max-width:440px;margin:0;padding-bottom:10px}
