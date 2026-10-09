@@ -55,11 +55,24 @@
   }
   .row{display:flex;gap:9px;flex-wrap:wrap}
   .row .btn{flex:1;min-width:148px}
+  #summary{
+    background:var(--asphalt-2);border:1px solid var(--line-dark);border-radius:var(--r);
+    padding:18px 20px;font-size:13.5px;line-height:1.6;color:#D3D6DB;
+    white-space:pre-wrap;margin-bottom:16px;
+  }
+
+  /* On paper this is a letter to a public office, not a terminal dump:
+     serif body, generous margins, and none of the on-screen guidance. */
   @media print{
-    .site-head,.site-foot,.row,#form-wrap,#out>.plate,#out>h2,.note{display:none !important}
-    body{background:#fff}
+    @page{ margin:25mm 22mm; }
+    .site-head,.site-foot,.row,#form-wrap,#out>.plate,#out>h2,.note,#summary{display:none !important}
+    body{background:#fff;color:#000}
     #out{display:block !important;max-width:100%}
-    #letter{background:#fff;color:#000;padding:0;font-size:12px;border-radius:0}
+    #letter{
+      background:#fff;color:#000;padding:0;border-radius:0;
+      font-family:Georgia,'Times New Roman',serif;
+      font-size:11.5pt;line-height:1.55;
+    }
   }
 </style>
 </head>
@@ -149,6 +162,7 @@
     <p class="plate">Ready to send</p>
     <h2 style="margin:8px 0 16px">Your appeal, in Italian</h2>
     <div id="letter"></div>
+    <div id="summary"></div>
     <div class="row">
       <button class="btn primary" id="copy">Copy the text</button>
       <button class="btn ghost" id="print">Print / save as PDF</button>
@@ -440,22 +454,23 @@ document.getElementById('gen').addEventListener('click', function(){
 "RILEVATO CHE\n\n" + G.opts[chosen].it(d) + ";\n\n" +
 "CHIEDE\n\n" +
 "l'annullamento del verbale indicato in oggetto e di ogni conseguente richiesta di pagamento.\n\n" +
+(v('f_facts') ? "Nota del ricorrente (in lingua inglese):\n" + v('f_facts') + "\n\n" : "") +
 "Si allegano i seguenti documenti:\n" + (v('f_docs') || "(elencare i documenti allegati)") + "\n\n" +
 "Si chiede che ogni comunicazione relativa al presente ricorso sia inviata all'indirizzo sopra indicato.\n\n" +
-(v('f_town') || "____________") + ", " + today() + "\n\n" +
-"Firma ____________________\n" +
-(v('f_facts') ? "\n\nNota del ricorrente (in lingua inglese):\n" + v('f_facts') + "\n" : "") +
-"\n\n--------------------------------------------------\n" +
-"FOR YOUR OWN REFERENCE - ENGLISH SUMMARY\n" +
-"--------------------------------------------------\n" +
-"An appeal to the Prefect of " + prov + " under article 203 of the Italian\n" +
-"Highway Code, against fine no. " + v('f_num') + " issued by the comune of " + comune + ".\n" +
+(v('f_town') || "____________") + ", " + today() + "\n\n\n" +
+"Firma ____________________";
+
+  var s =
+"An appeal to the Prefect of " + prov + " under article 203 of the Italian Highway Code, " +
+"against fine no. " + v('f_num') + " issued by the comune of " + comune + ".\n" +
 "Ground: " + G.title + ".\n\n" +
-"Sign it, attach copies of every document you listed, and send it by\n" +
-"registered post with return receipt within 60 days of " + itDate(v('f_notified')) + ".\n" +
-"Do not pay the fine in the meantime: paying bars the appeal.";
+"Print it, sign it, attach copies of every document you listed, and send it by registered post " +
+"with return receipt within 60 days of " + itDate(v('f_notified')) + ".\n" +
+"Do not pay the fine in the meantime: paying bars the appeal.\n\n" +
+"This summary is for you. It is not printed with the letter.";
 
   document.getElementById('letter').textContent = t;
+  document.getElementById('summary').textContent = s;
   document.getElementById('out').style.display = 'block';
   document.getElementById('form-wrap').style.display = 'none';
   window.scrollTo(0,0);
