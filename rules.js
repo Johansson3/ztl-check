@@ -51,13 +51,13 @@ window.ZTL_RULES = {
       s:"amber",
       h:"You have a ground",
       d:"The letter contains a factual error you can prove. This is the kind of appeal that works.",
-      c:"act", cl:"Write my appeal — €9", href:"#"
+      c:"act", cl:"Write my appeal — free for now", href:"appeal.html"
     },
     appeal_medium: {
       s:"amber",
       h:"You have a ground, if you can prove it",
       d:"Hotel failures succeed in roughly a third of cases, but only with written evidence.",
-      c:"act", cl:"Write my appeal — €9", href:"#"
+      c:"act", cl:"Write my appeal — free for now", href:"appeal.html"
     },
     no_ground: {
       s:"red",

@@ -58,7 +58,10 @@
     var c = document.getElementById('cta');
     c.className = 'btn block ' + (o.c === 'act' ? 'primary' : 'ghost');
     c.textContent = o.cl;
-    c.setAttribute('href', o.href || '#');
+    // carry the ground over to the generator so it can name it
+    var href = o.href || '#';
+    if (o.c === 'act' && r.ground) href += '?g=' + encodeURIComponent(r.ground);
+    c.setAttribute('href', href);
 
     show('sr', 4);
   }

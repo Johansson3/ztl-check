@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Write your ZTL appeal — ZTL check</title>
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Narrow:wght@600;700&family=Archivo:wght@400;600;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<style>
+  .form-grid{max-width:440px;margin:0}
+  .form-grid input, .form-grid textarea{
+    width:100%;background:var(--asphalt-2);border:1px solid var(--line-dark);
+    border-radius:var(--r);padding:14px 16px;color:var(--sign);font:inherit;font-size:15px;
+  }
+  .form-grid textarea{min-height:92px;resize:vertical;line-height:1.5}
+  .form-grid label{display:block;margin-bottom:13px}
+  .form-grid label .plate{display:block;margin-bottom:6px}
+  .two{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+  @media(max-width:460px){.two{grid-template-columns:1fr;gap:0}}
+  #out{display:none;max-width:560px;margin:0}
+  #letter{
+    background:var(--sign);color:#111;border-radius:var(--r);padding:22px;
+    font-family:ui-monospace,'SF Mono',Menlo,monospace;font-size:13px;line-height:1.62;
+    white-space:pre-wrap;word-wrap:break-word;margin-bottom:14px;
+  }
+  .row{display:flex;gap:9px;flex-wrap:wrap}
+  .row .btn{flex:1;min-width:150px}
+  .miss{border-color:var(--rosso) !important}
+  @media print{
+    .site-head,.site-foot,.row,#form-wrap,h1,.plate,.note{display:none !important}
+    body{background:#fff}
+    #out{display:block !important;max-width:100%}
+    #letter{background:#fff;color:#000;padding:0;font-size:12px}
+  }
+</style>
+</head>
+<body class="night">
+
+<header class="site-head">
+  <div class="wrap">
+    <div class="mark" aria-hidden="true"></div>
+    <a class="brand" href="index.html">ZTL check</a>
+    <nav>
+      <a href="what-is-ztl.html">What is a ZTL</a>
+      <a href="appeal-grounds.html">When appeals work</a>
+      <a href="how-to-pay.html">Paying</a>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <section id="form-wrap" style="padding:34px 0 0;max-width:560px">
+    <p class="plate">Step 5 — your details</p>
+    <h1 style="margin:10px 0 12px;font-size:clamp(26px,5.5vw,36px)">Write your appeal</h1>
+    <p class="lede" style="color:#C9CDD3" id="intro">Everything stays in your browser. Nothing is uploaded, nothing is stored.</p>
+
+    <div class="note" id="groundnote" style="display:none"><b>Your ground</b><span id="gtext"></span></div>
+
+    <div class="form-grid" style="margin-top:22px">
+      <label><span class="plate">Your full name</span><input id="f_name" autocomplete="name"></label>
+      <label><span class="plate">Born in / on — as on your ID</span><input id="f_born" placeholder="Malmö, 12.03.1986"></label>
+      <label><span class="plate">Your full address</span><textarea id="f_addr" autocomplete="street-address" style="min-height:70px"></textarea></label>
+
+      <div class="two">
+        <label><span class="plate">Fine number (verbale)</span><input id="f_num"></label>
+        <label><span class="plate">Issuing city (comune)</span><input id="f_city" placeholder="Firenze"></label>
+      </div>
+      <div class="two">
+        <label><span class="plate">Number plate</span><input id="f_plate" style="text-transform:uppercase"></label>
+        <label><span class="plate">Date you were notified</span><input id="f_notified" type="date"></label>
+      </div>
+
+      <label><span class="plate">What is wrong — in your own words, in English</span>
+        <textarea id="f_facts" placeholder="The fine says the car was a grey Fiat Panda. I was driving a white Renault Clio, plate XY-123-ZW, as the rental agreement shows."></textarea></label>
+
+      <label><span class="plate">Documents you are attaching</span>
+        <textarea id="f_docs" style="min-height:70px" placeholder="Rental agreement 12–16 June 2026; photo of the car; booking confirmation"></textarea></label>
+
+      <button class="btn primary block" id="gen" style="margin-top:6px">Generate the letter</button>
+    </div>
+  </section>
+
+  <section id="out" style="padding-top:30px">
+    <p class="plate">Ready to send</p>
+    <h2 style="margin:8px 0 16px">Your appeal, in Italian</h2>
+    <div id="letter"></div>
+    <div class="row">
+      <button class="btn primary" id="copy">Copy the text</button>
+      <button class="btn ghost" id="print">Print / save as PDF</button>
+      <a class="btn ghost" href="appeal.html">Start again</a>
+    </div>
+
+    <div class="note stop" style="margin-top:26px">
+      <b>Before you send it</b>
+      Send it by registered post (raccomandata A/R) to the Prefecture of the province that issued the fine, within 60 days of notification, with copies of every document you listed. Keep the receipt. Attach an English translation only if you want to — the Italian text is what counts.
+    </div>
+    <div class="note">
+      <b>Check it yourself</b>
+      This is a template filled with what you typed. Read it once before sending, and make sure the fine number, the plate and the dates match the letter you received exactly.
+    </div>
+  </section>
+</main>
+
+<footer class="site-foot">
+  <div class="wrap">
+    <nav>
+      <a href="what-is-ztl.html">What is a ZTL</a>
+      <a href="rental-charge.html">The rental charge</a>
+      <a href="appeal-grounds.html">When appeals work</a>
+      <a href="how-to-pay.html">Paying</a>
+    </nav>
+    <p style="margin:0">We are not lawyers and this is not legal advice. We help you prepare a document; what you send and whether you send it is your decision.</p>
+  </div>
+</footer>
+
+<script src="rules.js"></script>
+<script>
+(function(){
+  var G = {
+    wrong_plate:    "la targa indicata nel verbale non corrisponde al veicolo condotto dal sottoscritto",
+    wrong_datetime: "la data e l'ora indicate nel verbale non corrispondono",
+    wrong_vehicle:  "il veicolo descritto nel verbale non corrisponde a quello condotto dal sottoscritto",
+    hotel_whitelist:"la targa del veicolo era stata comunicata alla struttura ricettiva, che avrebbe dovuto provvedere all'autorizzazione all'accesso",
+    notified_late:  "la notificazione del verbale è avvenuta oltre il termine di legge"
+  };
+
+  var g = new URLSearchParams(location.search).get('g');
+  if (g && window.ZTL_RULES && ZTL_RULES.grounds[g]) {
+    document.getElementById('groundnote').style.display = '';
+    document.getElementById('gtext').textContent = ZTL_RULES.grounds[g];
+  }
+
+  function v(id){ return document.getElementById(id).value.trim(); }
+
+  function itDate(s){
+    if(!s) return '____________';
+    var p = s.split('-');
+    return p[2] + '.' + p[1] + '.' + p[0];
+  }
+
+  document.getElementById('gen').addEventListener('click', function(){
+    var req = ['f_name','f_addr','f_num','f_city','f_plate','f_notified','f_facts'], ok = true;
+    req.forEach(function(id){
+      var el = document.getElementById(id);
+      if(!el.value.trim()){ el.classList.add('miss'); ok = false; } else { el.classList.remove('miss'); }
+    });
+    if(!ok){ document.querySelector('.miss').focus(); return; }
+
+    var motivo = G[g] || "il verbale risulta viziato per i motivi di seguito esposti";
+
+    var t =
+"Alla Prefettura — Ufficio Territoriale del Governo\n" +
+"di " + v('f_city') + "\n\n" +
+"OGGETTO: ricorso ai sensi dell'art. 203 del Codice della Strada\n" +
+"avverso il verbale n. " + v('f_num') + "\n\n" +
+"Il/La sottoscritto/a " + v('f_name') +
+(v('f_born') ? ", nato/a a " + v('f_born') : "") + ",\n" +
+"residente in:\n" + v('f_addr') + "\n\n" +
+"in qualità di conducente del veicolo targato " + v('f_plate').toUpperCase() + ",\n\n" +
+"PREMESSO CHE\n\n" +
+"in data " + itDate(v('f_notified')) + " ha ricevuto la notifica del verbale di contestazione n. " +
+v('f_num') + ", elevato dal Comune di " + v('f_city') + " per asserito accesso non autorizzato " +
+"in Zona a Traffico Limitato;\n\n" +
+"RILEVATO CHE\n\n" + motivo + ";\n\n" +
+"e in particolare quanto segue:\n\n" + v('f_facts') + "\n\n" +
+"CHIEDE\n\n" +
+"l'annullamento del verbale indicato in oggetto e di ogni conseguente richiesta di pagamento.\n\n" +
+"Si allegano alla presente i seguenti documenti:\n" +
+(v('f_docs') || "(elencare i documenti allegati)") + "\n\n" +
+"Si chiede inoltre che ogni comunicazione relativa al presente ricorso sia inviata " +
+"all'indirizzo sopra indicato.\n\n" +
+"Luogo e data ____________________\n\n" +
+"Firma ____________________\n\n\n" +
+"--------------------------------------------------\n" +
+"FOR YOUR OWN REFERENCE — ENGLISH SUMMARY\n" +
+"--------------------------------------------------\n" +
+"This letter is an appeal to the Prefect under article 203 of the Italian\n" +
+"Highway Code, against fine no. " + v('f_num') + " issued by " + v('f_city') + ".\n" +
+"It states the ground you selected, sets out your account of the facts,\n" +
+"asks for the fine to be annulled, and lists your attachments.\n" +
+"Sign it, attach copies of the documents, and send it by registered post\n" +
+"within 60 days of " + itDate(v('f_notified')) + ".";
+
+    document.getElementById('letter').textContent = t;
+    document.getElementById('out').style.display = 'block';
+    document.getElementById('form-wrap').style.display = 'none';
+    window.scrollTo(0,0);
+  });
+
+  document.getElementById('copy').addEventListener('click', function(){
+    var btn = this;
+    navigator.clipboard.writeText(document.getElementById('letter').textContent).then(function(){
+      btn.textContent = 'Copied'; setTimeout(function(){ btn.textContent = 'Copy the text'; }, 1800);
+    }).catch(function(){ btn.textContent = 'Select the text and copy manually'; });
+  });
+
+  document.getElementById('print').addEventListener('click', function(){ window.print(); });
+})();
+</script>
+</body>
+</html>
