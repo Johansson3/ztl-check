@@ -1,4 +1,4 @@
-/* ZTL Check — tool shell.
+/* ZTL Check - tool shell.
    Reads window.ZTL_RULES. Don't put logic here; put it in rules.js. */
 
 (function () {
@@ -42,7 +42,7 @@
     var r = evaluate(), o = R.outcomes[r.out];
 
     document.getElementById('badge').className = 'sign-badge ' + o.s;
-    document.getElementById('bnum').textContent = (r.left === undefined || r.left === null) ? '—' : r.left;
+    document.getElementById('bnum').textContent = (r.left === undefined || r.left === null) ? '-' : r.left;
     document.getElementById('bunit').innerHTML =
       (r.left === undefined || r.left === null) ? 'no&nbsp;deadline'
       : r.out === 'pay_discount' ? 'days of<br>discount left'
