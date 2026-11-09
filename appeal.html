@@ -43,7 +43,9 @@
     display:block;background:var(--asphalt-2);border:1px solid var(--line-dark);
     border-radius:var(--r);padding:14px 16px;margin-bottom:9px;cursor:pointer;font-size:14px;line-height:1.45;
   }
-  .pick input{position:absolute;opacity:0;pointer-events:none}
+  /* width:0 matters: .form-grid input sets width:100%, and an absolutely
+     positioned radio would otherwise be 100% of the viewport and overflow it. */
+  .pick input{position:absolute;opacity:0;pointer-events:none;width:0;height:0}
   .pick.on{border-color:var(--ambra)}
   .pick b{display:block;font-weight:600}
 
@@ -171,7 +173,11 @@
 
     <div class="note stop" style="margin-top:26px">
       <b>How and where to send it</b>
-      You have 60 days from the date of notification. Send it by registered post with return receipt to the Prefecture of the province that issued the fine, or hand it to the office of the officer who issued it. Both routes are allowed. Keep the receipt.
+      <span id="sendto"></span>
+    </div>
+    <div class="note go">
+      <b>The Prefect is on a clock too</b>
+      Once your appeal is in, he has a deadline to decide: 210 days when you sent it to him directly, 180 days when you filed it with the office that issued the fine. If he lets that pass without deciding, the appeal counts as accepted. So keep the posting receipt, and note the date.
     </div>
     <div class="note">
       <b>What happens if the Prefect rejects it</b>
@@ -199,6 +205,7 @@
 <script src="rules.js"></script>
 <script src="data-comuni.js"></script>
 <script src="data-countries.js"></script>
+<script src="data-prefetture.js"></script>
 <script>
 (function(){
 
@@ -254,6 +261,10 @@ function typeahead(input, list, lookup, minLen){
 
 function fold(s){
   return s.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'');
+}
+
+function esc(s){
+  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
 }
 
 /* ---------------- comune -> province ---------------- */
@@ -433,7 +444,17 @@ document.getElementById('gen').addEventListener('click', function(){
   });
 
   var prov    = C.p[chosenComune[1]];
+  var sigla   = chosenComune[2];
   var comune  = chosenComune[0];
+
+  // Addressee block. Three provinces have no Prefettura of their own, so the
+  // letter names the body that actually holds the prefectural functions.
+  var P  = window.IT_PREFETTURE[sigla] || null;
+  var to = P
+    ? (P.to || "Alla Prefettura - Ufficio Territoriale del Governo di " + prov) +
+      "\n" + P.s + "\n" + P.z + " " + P.t
+    : "Alla Prefettura - Ufficio Territoriale del Governo di " + prov +
+      "\n(indirizzo indicato nel verbale)";
   // Italian name of the country, whether it was picked from the list or just typed
   var typed = v('f_country');
   var match = chosenCountry || window.COUNTRIES.find(function(r){
@@ -443,7 +464,7 @@ document.getElementById('gen').addEventListener('click', function(){
   var addr    = v('f_street') + '\n' + v('f_zip') + ' ' + v('f_town') + '\n' + country;
 
   var t =
-"Alla Prefettura - Ufficio Territoriale del Governo di " + prov + "\n\n" +
+to + "\n\n" +
 "OGGETTO: ricorso ai sensi dell'art. 203 del Codice della Strada\n" +
 "avverso il verbale di contestazione n. " + v('f_num') + " del " + itDate(v('f_vdate')) + "\n" +
 "elevato dal Comune di " + comune + "\n\n" +
@@ -473,6 +494,28 @@ document.getElementById('gen').addEventListener('click', function(){
 "with return receipt within 60 days of " + itDate(v('f_notified')) + ".\n" +
 "Do not pay the fine in the meantime: paying bars the appeal.\n\n" +
 "This summary is for you. It is not printed with the letter.";
+
+  // Where it physically goes, with the address spelled out.
+  var send;
+  if (P) {
+    send = 'You have 60 days from ' + itDate(v('f_notified')) + '. ' +
+      'Send it by registered post with return receipt (raccomandata A/R) to:' +
+      '<br><br><strong>' + esc(P.to ? P.to.replace(/^A[l]? /, '') : 'Prefettura - UTG di ' + prov) +
+      '<br>' + esc(P.s) + '<br>' + esc(P.z) + ' ' + esc(P.t) + ' - Italia</strong>' +
+      '<br><br>That is the route article 203 comma 1-bis provides for sending it straight to the Prefect, ' +
+      'and registered post is what it names. The other route is to file it with the police office that ' +
+      'issued the fine, named on the verbale: by hand, by registered post, or by certified email. ' +
+      'The Prefecture\'s certified address is <strong>' + esc(P.pec) + '</strong>, but an ordinary ' +
+      'email account cannot send to one, so without PEC the post is your route. Keep the receipt.' +
+      '<br><br><span style="opacity:.7">Check this address against the one printed on your fine. ' +
+      'Offices move, and the fine is the authority.</span>';
+  } else {
+    send = 'You have 60 days from ' + itDate(v('f_notified')) + '. ' +
+      'We do not hold a Prefecture address for this province, so take it from the fine itself: ' +
+      'it names the office and address for the appeal. Send it by registered post with return receipt, ' +
+      'and keep the receipt.';
+  }
+  document.getElementById('sendto').innerHTML = send;
 
   document.getElementById('letter').textContent = t;
   document.getElementById('summary').textContent = s;
